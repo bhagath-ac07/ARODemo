@@ -26,7 +26,7 @@ steps:
     connectionType: 'OpenShift Connection Service'
     openshiftService: 'ARO Connection'
     version: '4.2'
-    cmd: 'oc start-build ARODemo --follow'
+    cmd: 'oc start-build aro-demo --follow'
 - task: oc-cmd@2
   inputs:
     connectionType: 'OpenShift Connection Service'

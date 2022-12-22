@@ -1,0 +1,240 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  generateName: aro-demo-git-9f8ddf74d-
+  annotations:
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.129.2.23"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.129.2.23"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+  resourceVersion: '825203'
+  name: aro-demo-git-9f8ddf74d-pgv6z
+  uid: d80a8a14-603d-4b13-977a-968fc0eb9713
+  creationTimestamp: '2022-12-22T07:13:06Z'
+  managedFields:
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2022-12-22T07:13:06Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:generateName': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:deploymentconfig': {}
+            'f:pod-template-hash': {}
+          'f:ownerReferences':
+            .: {}
+            'k:{"uid":"fd5881d7-aa8a-4dee-b18d-5d456482d705"}': {}
+        'f:spec':
+          'f:containers':
+            'k:{"name":"aro-demo-git"}':
+              .: {}
+              'f:image': {}
+              'f:imagePullPolicy': {}
+              'f:name': {}
+              'f:ports':
+                .: {}
+                'k:{"containerPort":8080,"protocol":"TCP"}':
+                  .: {}
+                  'f:containerPort': {}
+                  'f:protocol': {}
+                'k:{"containerPort":8443,"protocol":"TCP"}':
+                  .: {}
+                  'f:containerPort': {}
+                  'f:protocol': {}
+              'f:resources': {}
+              'f:terminationMessagePath': {}
+              'f:terminationMessagePolicy': {}
+          'f:dnsPolicy': {}
+          'f:enableServiceLinks': {}
+          'f:restartPolicy': {}
+          'f:schedulerName': {}
+          'f:securityContext': {}
+          'f:terminationGracePeriodSeconds': {}
+    - manager: multus
+      operation: Update
+      apiVersion: v1
+      time: '2022-12-22T07:13:09Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:k8s.v1.cni.cncf.io/network-status': {}
+            'f:k8s.v1.cni.cncf.io/networks-status': {}
+      subresource: status
+    - manager: Go-http-client
+      operation: Update
+      apiVersion: v1
+      time: '2022-12-22T07:13:12Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:conditions':
+            'k:{"type":"ContainersReady"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Initialized"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Ready"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:containerStatuses': {}
+          'f:hostIP': {}
+          'f:podIP': {}
+          'f:podIPs':
+            .: {}
+            'k:{"ip":"10.129.2.23"}':
+              .: {}
+              'f:ip': {}
+          'f:startTime': {}
+      subresource: status
+  namespace: default
+  ownerReferences:
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      name: aro-demo-git-9f8ddf74d
+      uid: fd5881d7-aa8a-4dee-b18d-5d456482d705
+      controller: true
+      blockOwnerDeletion: true
+  labels:
+    app: aro-demo-git
+    deploymentconfig: aro-demo-git
+    pod-template-hash: 9f8ddf74d
+spec:
+  restartPolicy: Always
+  serviceAccountName: default
+  imagePullSecrets:
+    - name: default-dockercfg-2hqf7
+  priority: 0
+  schedulerName: default-scheduler
+  enableServiceLinks: true
+  terminationGracePeriodSeconds: 30
+  preemptionPolicy: PreemptLowerPriority
+  nodeName: cluster-9s8mz-worker-southindia-p2fk9
+  securityContext: {}
+  containers:
+    - name: aro-demo-git
+      image: 'aro-demo-git:latest'
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
+      resources: {}
+      volumeMounts:
+        - name: kube-api-access-pg8b8
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      imagePullPolicy: Always
+  serviceAccount: default
+  volumes:
+    - name: kube-api-access-pg8b8
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+          - configMap:
+              name: openshift-service-ca.crt
+              items:
+                - key: service-ca.crt
+                  path: service-ca.crt
+        defaultMode: 420
+  dnsPolicy: ClusterFirst
+  tolerations:
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+status:
+  phase: Pending
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-12-22T07:13:06Z'
+    - type: Ready
+      status: 'False'
+      lastProbeTime: null
+      lastTransitionTime: '2022-12-22T07:13:06Z'
+      reason: ContainersNotReady
+      message: 'containers with unready status: [aro-demo-git]'
+    - type: ContainersReady
+      status: 'False'
+      lastProbeTime: null
+      lastTransitionTime: '2022-12-22T07:13:06Z'
+      reason: ContainersNotReady
+      message: 'containers with unready status: [aro-demo-git]'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-12-22T07:13:06Z'
+  hostIP: 10.0.2.6
+  podIP: 10.129.2.23
+  podIPs:
+    - ip: 10.129.2.23
+  startTime: '2022-12-22T07:13:06Z'
+  containerStatuses:
+    - name: aro-demo-git
+      state:
+        waiting:
+          reason: ImagePullBackOff
+          message: 'Back-off pulling image "aro-demo-git:latest"'
+      lastState: {}
+      ready: false
+      restartCount: 0
+      image: 'aro-demo-git:latest'
+      imageID: ''
+      started: false
+  qosClass: BestEffort

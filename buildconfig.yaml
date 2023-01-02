@@ -1,0 +1,24 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: my-private-app
+spec:
+  source:
+    type: Docker
+    dockerfile: |
+      FROM myregistry.example.com/my-private-app:latest
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: my-private-app:latest
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChange:
+      from:
+        kind: ImageStreamTag
+        name: my-private-app:latest
+  imagePullSecrets:
+  - name: myregistrysecret
